@@ -22,10 +22,6 @@ public class Resena {
     @JoinColumn(name = "cedula")
     private Usuario comprador;
 
-    @ManyToOne
-    @JoinColumn(name = "cedula")
-    private Usuario vendedor;
-
     @OneToOne
     @JoinColumn(name = "idProducto")
     private Producto producto;

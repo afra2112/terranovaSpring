@@ -1,10 +1,10 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class NotificacionDTO {
 
     private int idNotificacion;
@@ -17,5 +17,5 @@ public class NotificacionDTO {
 
     private boolean leido;
 
-    private UsuarioDTO usuario;
+    private String cedulaUsuario;
 }

@@ -1,8 +1,11 @@
 package com.proyecto.terranova.dto;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Data
 public class CitaDTO {
 
     private int idCita;
@@ -13,11 +16,11 @@ public class CitaDTO {
 
     private LocalTime horaCita;
 
-    private ProductoDTO producto;
+    private int idProducto;
 
-    private UsuarioDTO comprador;
+    private String cedulaComprador;
 
-    private UsuarioDTO vendedor;
+    private String cedulaVendedor;
 
-    private UbicacionDTO ubicacion;
+    private int idUbicacion;
 }

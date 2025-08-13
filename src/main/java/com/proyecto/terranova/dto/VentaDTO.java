@@ -1,10 +1,10 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class VentaDTO {
 
     private int idVenta;
@@ -19,9 +19,9 @@ public class VentaDTO {
 
     private Long gananciaNeta;
 
-    private ProductoDTO producto;
+    private int idProducto;
 
-    private UsuarioDTO comprador;
+    private String cedulaComprador;
 
-    private UsuarioDTO vendedor;
+    private String cedulaVendedor;
 }

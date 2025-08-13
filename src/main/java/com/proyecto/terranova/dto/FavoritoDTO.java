@@ -1,13 +1,13 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+@Data
 public class FavoritoDTO {
 
     private int idFavorito;
 
-    private UsuarioDTO comprador;
+    private String cedulaComprador;
 
-    private ProductoDTO producto;
+    private int idProducto;
 }

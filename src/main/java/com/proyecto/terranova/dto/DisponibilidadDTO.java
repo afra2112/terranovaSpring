@@ -1,10 +1,11 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Data
 public class DisponibilidadDTO {
 
     private int idDisponibilidad;
@@ -15,5 +16,5 @@ public class DisponibilidadDTO {
 
     private boolean disponible;
 
-    private UsuarioDTO usuario;
+    private String cedulaUsuario;
 }

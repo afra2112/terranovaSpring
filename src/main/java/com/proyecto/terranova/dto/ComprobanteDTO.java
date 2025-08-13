@@ -1,11 +1,10 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
+@Data
 public class ComprobanteDTO {
 
     private int idComprobante;
@@ -16,5 +15,5 @@ public class ComprobanteDTO {
 
     private LocalDateTime fechaSubida;
 
-    private VentaDTO venta;
+    private int idVenta;
 }

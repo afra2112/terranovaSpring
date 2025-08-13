@@ -1,8 +1,8 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+@Data
 public class UbicacionDTO {
 
     private int idUbicacion;

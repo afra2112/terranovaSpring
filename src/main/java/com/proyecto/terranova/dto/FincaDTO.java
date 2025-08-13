@@ -1,8 +1,8 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+@Data
 public class FincaDTO {
 
     private int idFinca;
@@ -17,5 +17,5 @@ public class FincaDTO {
 
     private int numeroBanos;
 
-    private ProductoDTO producto;
+    private int idProducto;
 }

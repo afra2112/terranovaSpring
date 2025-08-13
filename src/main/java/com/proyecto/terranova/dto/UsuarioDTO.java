@@ -1,12 +1,11 @@
 package com.proyecto.terranova.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class UsuarioDTO {
 
     private String cedula;
@@ -23,7 +22,7 @@ public class UsuarioDTO {
 
     private LocalDate nacimiento;
 
-    private List<UsuarioRolDTO> usuarioRoles = new ArrayList<>();
+    private List<String> roles;
 
-    private DisponibilidadDTO disponibilidad;
+    private int idDisponibilidad;
 }
