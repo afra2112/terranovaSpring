@@ -1,12 +1,14 @@
 package com.proyecto.terranova.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "disponibilidad")
+@Table(name = "disponibilidades")
+@Data
 public class Disponibilidad {
 
     @Id

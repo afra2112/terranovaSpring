@@ -37,7 +37,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<UsuarioRol> usuarioRoles = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "idDisponibilidad", nullable = false)
-    private Disponibilidad disponibilidad;
+    @OneToMany(mappedBy = "usuario")
+    private List<Disponibilidad> disponibilidad;
 }
