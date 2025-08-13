@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ImagenDTO {
 
-    private int idImagen;
+    private Long idImagen;
 
     private String nombreArchivo;
 

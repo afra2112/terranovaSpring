@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class NotificacionDTO {
 
-    private int idNotificacion;
+    private Long idNotificacion;
 
     private String mensajeNotificacion;
 

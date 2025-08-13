@@ -10,7 +10,7 @@ public class Terreno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTerreno;
+    private Long idTerreno;
 
     @Column(nullable = false)
     private double tamanoTerreno;

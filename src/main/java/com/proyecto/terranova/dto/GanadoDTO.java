@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class GanadoDTO {
 
-    private int idGanado;
+    private Long idGanado;
 
     private String razaGanado;
 

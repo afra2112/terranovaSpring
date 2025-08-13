@@ -8,7 +8,7 @@ import java.time.LocalTime;
 @Data
 public class CitaDTO {
 
-    private int idCita;
+    private Long idCita;
 
     private LocalDate fechaCita;
 

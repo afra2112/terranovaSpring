@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class GastoVentaDTO {
 
-    private int idGasto;
+    private Long idGasto;
 
     private String nombreGasto;
 

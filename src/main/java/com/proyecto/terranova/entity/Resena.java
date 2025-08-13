@@ -10,7 +10,7 @@ public class Resena {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idResena;
+    private Long idResena;
 
     @Column(nullable = false, length = 255)
     private String comentario;

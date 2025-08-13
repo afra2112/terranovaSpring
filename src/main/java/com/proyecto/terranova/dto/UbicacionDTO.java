@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UbicacionDTO {
 
-    private int idUbicacion;
+    private Long idUbicacion;
 
     private String departamento;
 

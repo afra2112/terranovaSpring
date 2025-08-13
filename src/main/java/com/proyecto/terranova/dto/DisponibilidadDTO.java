@@ -8,7 +8,7 @@ import java.time.LocalTime;
 @Data
 public class DisponibilidadDTO {
 
-    private int idDisponibilidad;
+    private Long idDisponibilidad;
 
     private LocalDate fecha;
 

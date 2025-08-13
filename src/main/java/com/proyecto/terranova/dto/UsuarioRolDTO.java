@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UsuarioRolDTO {
 
-    private int idRolUsuario;
+    private Long idRolUsuario;
 
     private String cedulaUsuario;
 

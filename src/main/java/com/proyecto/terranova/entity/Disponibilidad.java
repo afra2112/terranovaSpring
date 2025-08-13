@@ -13,7 +13,7 @@ public class Disponibilidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDisponibilidad;
+    private Long idDisponibilidad;
 
     @Column(nullable = false)
     private LocalDate fecha;

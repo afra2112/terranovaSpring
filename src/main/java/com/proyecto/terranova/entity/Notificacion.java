@@ -12,7 +12,7 @@ public class Notificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idNotificacion;
+    private Long idNotificacion;
 
     @Column(nullable = false, length = 255)
     private String mensajeNotificacion;

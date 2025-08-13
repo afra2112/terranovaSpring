@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class FincaDTO {
 
-    private int idFinca;
+    private Long idFinca;
 
     private String espacioTotal;
 

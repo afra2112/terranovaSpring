@@ -10,7 +10,7 @@ public class UsuarioRol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRolUsuario;
+    private Long idRolUsuario;
 
     @ManyToOne
     @JoinColumn(name = "cedulaUsuario", nullable = false)

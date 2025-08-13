@@ -10,7 +10,7 @@ public class Favorito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idFavorito;
+    private Long idFavorito;
 
     @ManyToOne
     @JoinColumn(name = "cedula")

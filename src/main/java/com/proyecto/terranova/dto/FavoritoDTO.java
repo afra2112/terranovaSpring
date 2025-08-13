@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class FavoritoDTO {
 
-    private int idFavorito;
+    private Long idFavorito;
 
     private String cedulaComprador;
 

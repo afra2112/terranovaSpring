@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class VentaDTO {
 
-    private int idVenta;
+    private Long idVenta;
 
     private LocalDateTime fechaVenta;
 

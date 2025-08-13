@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class ProductoDTO {
 
-    private int idProducto;
+    private Long idProducto;
 
     private String nombreProducto;
 

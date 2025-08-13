@@ -10,7 +10,7 @@ public class Finca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idFinca;
+    private Long idFinca;
 
     @Column(nullable = false, length = 30)
     private String espacioTotal;

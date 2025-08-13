@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class ResenaDTO {
 
-    private int idResena;
+    private Long idResena;
 
     private String comentario;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class RolDTO {
 
-    private int idRol;
+    private Long idRol;
 
     private String nombreRol;
 }

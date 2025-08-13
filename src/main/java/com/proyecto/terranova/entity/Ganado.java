@@ -10,7 +10,7 @@ public class Ganado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idGanado;
+    private Long idGanado;
 
     @Column(nullable = false, length = 30)
     private String razaGanado;

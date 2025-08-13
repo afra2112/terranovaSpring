@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TerrenoDTO {
 
-    private int idTerreno;
+    private Long idTerreno;
 
     private double tamanoTerreno;
 

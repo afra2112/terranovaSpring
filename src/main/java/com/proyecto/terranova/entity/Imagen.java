@@ -10,7 +10,7 @@ public class Imagen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idImagen;
+    private Long idImagen;
 
     @Column(nullable = false, length = 255)
     private String nombreArchivo;

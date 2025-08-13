@@ -10,7 +10,7 @@ public class Ubicacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUbicacion;
+    private Long idUbicacion;
 
     @Column(length = 50, nullable = false)
     private String departamento;

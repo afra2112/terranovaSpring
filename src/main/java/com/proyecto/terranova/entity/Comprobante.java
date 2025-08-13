@@ -12,7 +12,7 @@ public class Comprobante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idComprobante;
+    private Long idComprobante;
 
     @Column(nullable = false, length = 100)
     private String nombreComprobante;

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class ComprobanteDTO {
 
-    private int idComprobante;
+    private Long idComprobante;
 
     private String nombreComprobante;
 
