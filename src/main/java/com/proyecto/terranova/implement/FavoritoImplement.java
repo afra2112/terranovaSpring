@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class FavoritoImplement implements FavoritoService {
     @Autowired
     private FavoritoRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public FavoritoDTO save(FavoritoDTO dto) {
-        Favorito entity = new Favorito();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Favorito entidadFavorito = modelMapper.map(dto, Favorito.class);
+        Favorito entidadGuardada = repository.save(entidadFavorito);
+        return modelMapper.map(entidadGuardada, FavoritoDTO.class);
     }
 
     @Override
     public FavoritoDTO update(Long id, FavoritoDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Favorito entidadFavorito = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Favorito no encontrado"));
+
+    	modelMapper.map(dto, entidadFavorito);
+
+    	Favorito entidadActualizada = repository.save(entidadFavorito);
+    	return modelMapper.map(entidadActualizada, FavoritoDTO.class);
     }
 
     @Override
     public FavoritoDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                FavoritoDTO dto = new FavoritoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Favorito entidadFavorito = repository.findById(id).orElseThrow(() -> new RuntimeException("Favorito no encontrado"));
+        return modelMapper.map(entidadFavorito, FavoritoDTO.class);
     }
 
     @Override
     public List<FavoritoDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                FavoritoDTO dto = new FavoritoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, FavoritoDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

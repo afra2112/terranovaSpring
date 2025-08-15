@@ -22,7 +22,5 @@ public class UsuarioDTO {
 
     private LocalDate nacimiento;
 
-    private List<String> roles;
-
-    private int idDisponibilidad;
+    private List<Long> idRoles;
 }

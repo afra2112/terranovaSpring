@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class ComprobanteImplement implements ComprobanteService {
     @Autowired
     private ComprobanteRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public ComprobanteDTO save(ComprobanteDTO dto) {
-        Comprobante entity = new Comprobante();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Comprobante entidadComprobante = modelMapper.map(dto, Comprobante.class);
+        Comprobante entidadGuardada = repository.save(entidadComprobante);
+        return modelMapper.map(entidadGuardada, ComprobanteDTO.class);
     }
 
     @Override
     public ComprobanteDTO update(Long id, ComprobanteDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Comprobante entidadComprobante = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Comprobante no encontrado"));
+
+    	modelMapper.map(dto, entidadComprobante);
+
+    	Comprobante entidadActualizada = repository.save(entidadComprobante);
+    	return modelMapper.map(entidadActualizada, ComprobanteDTO.class);
     }
 
     @Override
     public ComprobanteDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                ComprobanteDTO dto = new ComprobanteDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Comprobante entidadComprobante = repository.findById(id).orElseThrow(() -> new RuntimeException("Comprobante no encontrado"));
+        return modelMapper.map(entidadComprobante, ComprobanteDTO.class);
     }
 
     @Override
     public List<ComprobanteDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                ComprobanteDTO dto = new ComprobanteDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, ComprobanteDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

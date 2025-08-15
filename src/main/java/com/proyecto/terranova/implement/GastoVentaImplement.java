@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class GastoVentaImplement implements GastoVentaService {
     @Autowired
     private GastoVentaRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public GastoVentaDTO save(GastoVentaDTO dto) {
-        GastoVenta entity = new GastoVenta();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        GastoVenta entidadGastoVenta = modelMapper.map(dto, GastoVenta.class);
+        GastoVenta entidadGuardada = repository.save(entidadGastoVenta);
+        return modelMapper.map(entidadGuardada, GastoVentaDTO.class);
     }
 
     @Override
     public GastoVentaDTO update(Long id, GastoVentaDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        GastoVenta entidadGastoVenta = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("GastoVenta no encontrado"));
+
+    	modelMapper.map(dto, entidadGastoVenta);
+
+    	GastoVenta entidadActualizada = repository.save(entidadGastoVenta);
+    	return modelMapper.map(entidadActualizada, GastoVentaDTO.class);
     }
 
     @Override
     public GastoVentaDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                GastoVentaDTO dto = new GastoVentaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        GastoVenta entidadGastoVenta = repository.findById(id).orElseThrow(() -> new RuntimeException("GastoVenta no encontrado"));
+        return modelMapper.map(entidadGastoVenta, GastoVentaDTO.class);
     }
 
     @Override
     public List<GastoVentaDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                GastoVentaDTO dto = new GastoVentaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, GastoVentaDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

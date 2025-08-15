@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class FincaImplement implements FincaService {
     @Autowired
     private FincaRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public FincaDTO save(FincaDTO dto) {
-        Finca entity = new Finca();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Finca entidadFinca = modelMapper.map(dto, Finca.class);
+        Finca entidadGuardada = repository.save(entidadFinca);
+        return modelMapper.map(entidadGuardada, FincaDTO.class);
     }
 
     @Override
     public FincaDTO update(Long id, FincaDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Finca entidadFinca = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Finca no encontrado"));
+
+    	modelMapper.map(dto, entidadFinca);
+
+    	Finca entidadActualizada = repository.save(entidadFinca);
+    	return modelMapper.map(entidadActualizada, FincaDTO.class);
     }
 
     @Override
     public FincaDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                FincaDTO dto = new FincaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Finca entidadFinca = repository.findById(id).orElseThrow(() -> new RuntimeException("Finca no encontrado"));
+        return modelMapper.map(entidadFinca, FincaDTO.class);
     }
 
     @Override
     public List<FincaDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                FincaDTO dto = new FincaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, FincaDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

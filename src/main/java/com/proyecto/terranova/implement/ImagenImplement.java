@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class ImagenImplement implements ImagenService {
     @Autowired
     private ImagenRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public ImagenDTO save(ImagenDTO dto) {
-        Imagen entity = new Imagen();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Imagen entidadImagen = modelMapper.map(dto, Imagen.class);
+        Imagen entidadGuardada = repository.save(entidadImagen);
+        return modelMapper.map(entidadGuardada, ImagenDTO.class);
     }
 
     @Override
     public ImagenDTO update(Long id, ImagenDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Imagen entidadImagen = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Imagen no encontrado"));
+
+    	modelMapper.map(dto, entidadImagen);
+
+    	Imagen entidadActualizada = repository.save(entidadImagen);
+    	return modelMapper.map(entidadActualizada, ImagenDTO.class);
     }
 
     @Override
     public ImagenDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                ImagenDTO dto = new ImagenDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Imagen entidadImagen = repository.findById(id).orElseThrow(() -> new RuntimeException("Imagen no encontrado"));
+        return modelMapper.map(entidadImagen, ImagenDTO.class);
     }
 
     @Override
     public List<ImagenDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                ImagenDTO dto = new ImagenDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, ImagenDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

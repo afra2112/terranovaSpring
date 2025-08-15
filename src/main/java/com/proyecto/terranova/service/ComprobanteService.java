@@ -8,7 +8,7 @@ public interface ComprobanteService {
     ComprobanteDTO update(Long id, ComprobanteDTO dto); // Actualizar
     ComprobanteDTO findById(Long id);
     List<ComprobanteDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

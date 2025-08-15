@@ -8,7 +8,7 @@ public interface UbicacionService {
     UbicacionDTO update(Long id, UbicacionDTO dto); // Actualizar
     UbicacionDTO findById(Long id);
     List<UbicacionDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

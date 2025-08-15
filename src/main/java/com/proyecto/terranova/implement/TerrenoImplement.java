@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class TerrenoImplement implements TerrenoService {
     @Autowired
     private TerrenoRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public TerrenoDTO save(TerrenoDTO dto) {
-        Terreno entity = new Terreno();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Terreno entidadTerreno = modelMapper.map(dto, Terreno.class);
+        Terreno entidadGuardada = repository.save(entidadTerreno);
+        return modelMapper.map(entidadGuardada, TerrenoDTO.class);
     }
 
     @Override
     public TerrenoDTO update(Long id, TerrenoDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Terreno entidadTerreno = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Terreno no encontrado"));
+
+    	modelMapper.map(dto, entidadTerreno);
+
+    	Terreno entidadActualizada = repository.save(entidadTerreno);
+    	return modelMapper.map(entidadActualizada, TerrenoDTO.class);
     }
 
     @Override
     public TerrenoDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                TerrenoDTO dto = new TerrenoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Terreno entidadTerreno = repository.findById(id).orElseThrow(() -> new RuntimeException("Terreno no encontrado"));
+        return modelMapper.map(entidadTerreno, TerrenoDTO.class);
     }
 
     @Override
     public List<TerrenoDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                TerrenoDTO dto = new TerrenoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, TerrenoDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class UbicacionImplement implements UbicacionService {
     @Autowired
     private UbicacionRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public UbicacionDTO save(UbicacionDTO dto) {
-        Ubicacion entity = new Ubicacion();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Ubicacion entidadUbicacion = modelMapper.map(dto, Ubicacion.class);
+        Ubicacion entidadGuardada = repository.save(entidadUbicacion);
+        return modelMapper.map(entidadGuardada, UbicacionDTO.class);
     }
 
     @Override
     public UbicacionDTO update(Long id, UbicacionDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Ubicacion entidadUbicacion = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Ubicacion no encontrado"));
+
+    	modelMapper.map(dto, entidadUbicacion);
+
+    	Ubicacion entidadActualizada = repository.save(entidadUbicacion);
+    	return modelMapper.map(entidadActualizada, UbicacionDTO.class);
     }
 
     @Override
     public UbicacionDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                UbicacionDTO dto = new UbicacionDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Ubicacion entidadUbicacion = repository.findById(id).orElseThrow(() -> new RuntimeException("Ubicacion no encontrado"));
+        return modelMapper.map(entidadUbicacion, UbicacionDTO.class);
     }
 
     @Override
     public List<UbicacionDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                UbicacionDTO dto = new UbicacionDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, UbicacionDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

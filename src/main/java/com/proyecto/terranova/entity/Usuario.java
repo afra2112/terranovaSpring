@@ -40,9 +40,8 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "cedula"),
             inverseJoinColumns = @JoinColumn(name = "id_rol")
     )
-    private List<Rol> roles = new ArrayList<>();
+    private List<Rol> roles;
 
-    @OneToMany
-    @JoinColumn(name = "idDisponibilidad", nullable = false)
+    @OneToMany(mappedBy = "usuario")
     private List<Disponibilidad> disponibilidad;
 }

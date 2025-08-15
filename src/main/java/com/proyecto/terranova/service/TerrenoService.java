@@ -8,7 +8,7 @@ public interface TerrenoService {
     TerrenoDTO update(Long id, TerrenoDTO dto); // Actualizar
     TerrenoDTO findById(Long id);
     List<TerrenoDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

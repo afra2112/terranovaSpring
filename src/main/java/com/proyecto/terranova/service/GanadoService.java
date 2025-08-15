@@ -8,7 +8,7 @@ public interface GanadoService {
     GanadoDTO update(Long id, GanadoDTO dto); // Actualizar
     GanadoDTO findById(Long id);
     List<GanadoDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

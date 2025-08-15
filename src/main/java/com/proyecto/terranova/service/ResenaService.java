@@ -8,7 +8,7 @@ public interface ResenaService {
     ResenaDTO update(Long id, ResenaDTO dto); // Actualizar
     ResenaDTO findById(Long id);
     List<ResenaDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

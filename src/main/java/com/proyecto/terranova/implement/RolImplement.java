@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class RolImplement implements RolService {
     @Autowired
     private RolRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public RolDTO save(RolDTO dto) {
-        Rol entity = new Rol();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Rol entidadRol = modelMapper.map(dto, Rol.class);
+        Rol entidadGuardada = repository.save(entidadRol);
+        return modelMapper.map(entidadGuardada, RolDTO.class);
     }
 
     @Override
     public RolDTO update(Long id, RolDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Rol entidadRol = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+    	modelMapper.map(dto, entidadRol);
+
+    	Rol entidadActualizada = repository.save(entidadRol);
+    	return modelMapper.map(entidadActualizada, RolDTO.class);
     }
 
     @Override
     public RolDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                RolDTO dto = new RolDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Rol entidadRol = repository.findById(id).orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        return modelMapper.map(entidadRol, RolDTO.class);
     }
 
     @Override
     public List<RolDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                RolDTO dto = new RolDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, RolDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

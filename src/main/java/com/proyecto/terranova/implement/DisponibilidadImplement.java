@@ -1,5 +1,9 @@
 package com.proyecto.terranova.implement;
 
+import com.proyecto.terranova.entity.Producto;
+import com.proyecto.terranova.entity.Usuario;
+import com.proyecto.terranova.repository.UsuarioRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +20,54 @@ public class DisponibilidadImplement implements DisponibilidadService {
     @Autowired
     private DisponibilidadRepository repository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public DisponibilidadDTO save(DisponibilidadDTO dto) {
-        Disponibilidad entity = new Disponibilidad();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Disponibilidad entidadDisponibilidad = modelMapper.map(dto, Disponibilidad.class);
+        Usuario usuario = usuarioRepository.findById(dto.getCedulaUsuario())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        entidadDisponibilidad.setUsuario(usuario);
+        Disponibilidad entidadGuardada = repository.save(entidadDisponibilidad);
+        return modelMapper.map(entidadGuardada, DisponibilidadDTO.class);
     }
 
     @Override
     public DisponibilidadDTO update(Long id, DisponibilidadDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Disponibilidad entidadDisponibilidad = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrado"));
+
+    	modelMapper.map(dto, entidadDisponibilidad);
+
+    	Disponibilidad entidadActualizada = repository.save(entidadDisponibilidad);
+    	return modelMapper.map(entidadActualizada, DisponibilidadDTO.class);
     }
 
     @Override
     public DisponibilidadDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                DisponibilidadDTO dto = new DisponibilidadDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Disponibilidad entidadDisponibilidad = repository.findById(id).orElseThrow(() -> new RuntimeException("Disponibilidad no encontrado"));
+        return modelMapper.map(entidadDisponibilidad, DisponibilidadDTO.class);
     }
 
     @Override
     public List<DisponibilidadDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                DisponibilidadDTO dto = new DisponibilidadDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, DisponibilidadDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

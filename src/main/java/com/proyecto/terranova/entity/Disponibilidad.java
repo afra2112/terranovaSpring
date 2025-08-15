@@ -25,6 +25,6 @@ public class Disponibilidad {
     private boolean disponible;
 
     @ManyToOne
-    @JoinColumn(name = "CedulaVendedor", nullable = false)
+    @JoinColumn(name = "cedula", nullable = false)
     private Usuario usuario;
 }

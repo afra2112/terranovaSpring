@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class ResenaImplement implements ResenaService {
     @Autowired
     private ResenaRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public ResenaDTO save(ResenaDTO dto) {
-        Resena entity = new Resena();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Resena entidadResena = modelMapper.map(dto, Resena.class);
+        Resena entidadGuardada = repository.save(entidadResena);
+        return modelMapper.map(entidadGuardada, ResenaDTO.class);
     }
 
     @Override
     public ResenaDTO update(Long id, ResenaDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Resena entidadResena = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Resena no encontrado"));
+
+    	modelMapper.map(dto, entidadResena);
+
+    	Resena entidadActualizada = repository.save(entidadResena);
+    	return modelMapper.map(entidadActualizada, ResenaDTO.class);
     }
 
     @Override
     public ResenaDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                ResenaDTO dto = new ResenaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Resena entidadResena = repository.findById(id).orElseThrow(() -> new RuntimeException("Resena no encontrado"));
+        return modelMapper.map(entidadResena, ResenaDTO.class);
     }
 
     @Override
     public List<ResenaDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                ResenaDTO dto = new ResenaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, ResenaDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

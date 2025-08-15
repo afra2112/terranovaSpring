@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class VentaImplement implements VentaService {
     @Autowired
     private VentaRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public VentaDTO save(VentaDTO dto) {
-        Venta entity = new Venta();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Venta entidadVenta = modelMapper.map(dto, Venta.class);
+        Venta entidadGuardada = repository.save(entidadVenta);
+        return modelMapper.map(entidadGuardada, VentaDTO.class);
     }
 
     @Override
     public VentaDTO update(Long id, VentaDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Venta entidadVenta = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Venta no encontrado"));
+
+    	modelMapper.map(dto, entidadVenta);
+
+    	Venta entidadActualizada = repository.save(entidadVenta);
+    	return modelMapper.map(entidadActualizada, VentaDTO.class);
     }
 
     @Override
     public VentaDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                VentaDTO dto = new VentaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Venta entidadVenta = repository.findById(id).orElseThrow(() -> new RuntimeException("Venta no encontrado"));
+        return modelMapper.map(entidadVenta, VentaDTO.class);
     }
 
     @Override
     public List<VentaDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                VentaDTO dto = new VentaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, VentaDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

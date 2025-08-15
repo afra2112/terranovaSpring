@@ -8,7 +8,7 @@ public interface GastoVentaService {
     GastoVentaDTO update(Long id, GastoVentaDTO dto); // Actualizar
     GastoVentaDTO findById(Long id);
     List<GastoVentaDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

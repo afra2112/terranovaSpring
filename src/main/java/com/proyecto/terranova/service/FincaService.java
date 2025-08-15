@@ -8,7 +8,7 @@ public interface FincaService {
     FincaDTO update(Long id, FincaDTO dto); // Actualizar
     FincaDTO findById(Long id);
     List<FincaDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }

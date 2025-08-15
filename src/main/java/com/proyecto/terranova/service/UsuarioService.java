@@ -5,10 +5,10 @@ import com.proyecto.terranova.dto.UsuarioDTO;
 
 public interface UsuarioService {
     UsuarioDTO save(UsuarioDTO dto);
-    UsuarioDTO update(Long id, UsuarioDTO dto); // Actualizar
-    UsuarioDTO findById(Long id);
+    UsuarioDTO update(String id, UsuarioDTO dto); // Actualizar
+    UsuarioDTO findById(String id);
     List<UsuarioDTO> findAll();
-    boolean delete(Long id);
-    boolean existsById(Long id); // ValidaciÃ³n
+    boolean delete(String id);
+    boolean existsById(String id); // ValidaciÃ³n
     long count(); // Contar registros
 }

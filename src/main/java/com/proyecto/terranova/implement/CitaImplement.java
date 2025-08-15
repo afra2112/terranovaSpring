@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,50 +17,47 @@ public class CitaImplement implements CitaService {
     @Autowired
     private CitaRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public CitaDTO save(CitaDTO dto) {
-        Cita entity = new Cita();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Cita entidadCita = modelMapper.map(dto, Cita.class);
+        Cita entidadGuardada = repository.save(entidadCita);
+        return modelMapper.map(entidadGuardada, CitaDTO.class);
     }
 
     @Override
     public CitaDTO update(Long id, CitaDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                entity = repository.save(entity);
-                return dto;
-            })
-            .orElse(null);
+        Cita entidadCita = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Cita no encontrado"));
+
+    	modelMapper.map(dto, entidadCita);
+
+    	Cita entidadActualizada = repository.save(entidadCita);
+    	return modelMapper.map(entidadActualizada, CitaDTO.class);
     }
 
     @Override
     public CitaDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                CitaDTO dto = new CitaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Cita entidadCita = repository.findById(id).orElseThrow(() -> new RuntimeException("Cita no encontrado"));
+        return modelMapper.map(entidadCita, CitaDTO.class);
     }
 
     @Override
     public List<CitaDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                CitaDTO dto = new CitaDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, CitaDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

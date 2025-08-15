@@ -1,5 +1,6 @@
 package com.proyecto.terranova.implement;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -16,52 +17,47 @@ public class GanadoImplement implements GanadoService {
     @Autowired
     private GanadoRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public GanadoDTO save(GanadoDTO dto) {
-        Ganado entity = new Ganado();
-        // TODO: map DTO to Entity
-        entity = repository.save(entity);
-        // TODO: map Entity to DTO
-        return dto;
+        Ganado entidadGanado = modelMapper.map(dto, Ganado.class);
+        Ganado entidadGuardada = repository.save(entidadGanado);
+        return modelMapper.map(entidadGuardada, GanadoDTO.class);
     }
 
     @Override
     public GanadoDTO update(Long id, GanadoDTO dto) {
-        return repository.findById(id)
-            .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
-                entity = repository.save(entity);
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Ganado entidadGanado = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Ganado no encontrado"));
+
+    	modelMapper.map(dto, entidadGanado);
+
+    	Ganado entidadActualizada = repository.save(entidadGanado);
+    	return modelMapper.map(entidadActualizada, GanadoDTO.class);
     }
 
     @Override
     public GanadoDTO findById(Long id) {
-        return repository.findById(id)
-            .map(entity -> {
-                GanadoDTO dto = new GanadoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
-            .orElse(null);
+        Ganado entidadGanado = repository.findById(id).orElseThrow(() -> new RuntimeException("Ganado no encontrado"));
+        return modelMapper.map(entidadGanado, GanadoDTO.class);
     }
 
     @Override
     public List<GanadoDTO> findAll() {
         return repository.findAll().stream()
-            .map(entity -> {
-                GanadoDTO dto = new GanadoDTO();
-                // TODO: map Entity to DTO
-                return dto;
-            })
+            .map(entity -> modelMapper.map(entity, GanadoDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ProductoService {
     ProductoDTO update(Long id, ProductoDTO dto); // Actualizar
     ProductoDTO findById(Long id);
     List<ProductoDTO> findAll();
-    void delete(Long id);
+    boolean delete(Long id);
     boolean existsById(Long id); // ValidaciÃ³n
     long count(); // Contar registros
 }
