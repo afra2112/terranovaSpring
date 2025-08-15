@@ -1,4 +1,4 @@
-﻿package com.proyecto.terranova.implement;
+package com.proyecto.terranova.implement;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,7 @@ public class CitaImplement implements CitaService {
     public CitaDTO update(Long id, CitaDTO dto) {
         return repository.findById(id)
             .map(entity -> {
-                // TODO: actualizar campos desde DTO a entity
                 entity = repository.save(entity);
-                // TODO: map Entity to DTO
                 return dto;
             })
             .orElse(null);

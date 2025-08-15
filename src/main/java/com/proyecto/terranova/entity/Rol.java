@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -18,6 +20,6 @@ public class Rol {
     @Column(length = 10, nullable = false)
     private String nombreRol;
 
-    @OneToMany(mappedBy = "rol")
-    private List<UsuarioRol> usuarioRoles = new ArrayList<>();
+    @ManyToMany(mappedBy = "roles")
+    private Set<Usuario> usuarioSet = new HashSet<>();
 }

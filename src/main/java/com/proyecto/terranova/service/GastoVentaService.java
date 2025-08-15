@@ -1,4 +1,4 @@
-﻿package com.proyecto.terranova.service;
+package com.proyecto.terranova.service;
 
 import java.util.List;
 import com.proyecto.terranova.dto.GastoVentaDTO;

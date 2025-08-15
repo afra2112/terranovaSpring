@@ -30,11 +30,11 @@ public class Cita {
     private Producto producto;
 
     @ManyToOne
-    @JoinColumn(name = "cedula")
+    @JoinColumn(name = "cedula_comprador")
     private Usuario comprador;
 
     @ManyToOne
-    @JoinColumn(name = "cedula")
+    @JoinColumn(name = "cedula_vendedor")
     private Usuario vendedor;
 
     @OneToOne

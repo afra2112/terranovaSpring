@@ -1,4 +1,4 @@
-﻿package com.proyecto.terranova.implement;
+package com.proyecto.terranova.implement;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +60,12 @@ public class UsuarioImplement implements UsuarioService {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(!repository.existsById(id)){
+               return false;
+        }
         repository.deleteById(id);
+        return true;
     }
 
     @Override

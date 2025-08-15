@@ -34,9 +34,15 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDate nacimiento;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<UsuarioRol> usuarioRoles = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "cedula"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol")
+    )
+    private List<Rol> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany
+    @JoinColumn(name = "idDisponibilidad", nullable = false)
     private List<Disponibilidad> disponibilidad;
 }
