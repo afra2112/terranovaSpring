@@ -2,6 +2,7 @@
 package com.proyecto.terranova.controller;
 
 import com.proyecto.terranova.dto.UsuarioDTO;
+import com.proyecto.terranova.repository.UsuarioRepository;
 import com.proyecto.terranova.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioService serviceUsuario;
 
+    @Autowired
+    private UsuarioRepository repositoryUsuario;
 
     @GetMapping("/listarTodo")
     public ResponseEntity<List<UsuarioDTO>> obtenerTodosLosUsuarios(){
@@ -40,5 +43,11 @@ public class UsuarioController {
     public ResponseEntity<String> eliminarUsuario(@PathVariable String cedula){
         serviceUsuario.delete(cedula);
         return ResponseEntity.ok("Usuario eliminado");
+    }
+
+    @GetMapping("/consultarRoles/{cedula}")
+    public ResponseEntity<List<String>> consultarRolesPorCedula(@PathVariable String cedula){
+        List<String> listaRoles = repositoryUsuario.findByRolesAndCedula(cedula);
+        return ResponseEntity.ok(listaRoles);
     }
 }
