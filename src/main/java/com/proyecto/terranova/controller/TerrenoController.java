@@ -2,6 +2,7 @@
 package com.proyecto.terranova.controller;
 
 import com.proyecto.terranova.dto.TerrenoDTO;
+import com.proyecto.terranova.dto.UbicacionDTO;
 import com.proyecto.terranova.service.TerrenoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,11 @@ public class TerrenoController {
     public ResponseEntity<Long> eliminarTerreno(@PathVariable Long id){
         serviceTerreno.delete(id);
         return ResponseEntity.ok(id);
+    }
+
+    @PutMapping("/editarTerreno/{id}")
+    public  ResponseEntity<TerrenoDTO> editarUsuarioPorId(@PathVariable Long id, @RequestBody TerrenoDTO terrenoDTO){
+        TerrenoDTO TerrenoActualizado = serviceTerreno.update(id, terrenoDTO);
+        return ResponseEntity.ok(TerrenoActualizado);
     }
 }

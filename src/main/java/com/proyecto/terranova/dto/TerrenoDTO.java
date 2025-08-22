@@ -21,5 +21,5 @@ public class TerrenoDTO {
 
     private boolean cercado;
 
-    private int idProducto;
+    private Long idProducto;
 }

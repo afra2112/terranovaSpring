@@ -9,5 +9,5 @@ public class FavoritoDTO {
 
     private String cedulaComprador;
 
-    private int idProducto;
+    private Long idProducto;
 }

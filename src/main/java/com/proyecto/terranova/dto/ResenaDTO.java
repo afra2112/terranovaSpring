@@ -15,5 +15,5 @@ public class ResenaDTO {
 
     private String cedulaComprador;
 
-    private int idProducto;
+    private Long idProducto;
 }

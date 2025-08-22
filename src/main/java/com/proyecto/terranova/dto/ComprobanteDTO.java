@@ -15,5 +15,5 @@ public class ComprobanteDTO {
 
     private LocalDateTime fechaSubida;
 
-    private int idVenta;
+    private Long idVenta;
 }

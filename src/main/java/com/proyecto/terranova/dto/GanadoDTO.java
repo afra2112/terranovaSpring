@@ -23,5 +23,5 @@ public class GanadoDTO {
 
     private int cantidad;
 
-    private int idProducto;
+    private Long idProducto;
 }

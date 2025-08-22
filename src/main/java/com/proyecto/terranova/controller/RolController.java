@@ -2,6 +2,7 @@
 package com.proyecto.terranova.controller;
 
 import com.proyecto.terranova.dto.RolDTO;
+import com.proyecto.terranova.dto.UbicacionDTO;
 import com.proyecto.terranova.repository.RolRepository;
 import com.proyecto.terranova.repository.UsuarioRepository;
 import com.proyecto.terranova.service.RolService;
@@ -50,5 +51,11 @@ public class RolController {
     public ResponseEntity<List<String>> consultarRolesPorCedula(@PathVariable String cedula){
         List<String> listaRoles = repositoryRol.findByRolesAndCedula(cedula);
         return ResponseEntity.ok(listaRoles);
+    }
+
+    @PutMapping("/editarRol/{id}")
+    public  ResponseEntity<RolDTO> editarUsuarioPorId(@PathVariable Long id, @RequestBody RolDTO rolDTO){
+        RolDTO rolActualizado = serviceRol.update(id, rolDTO);
+        return ResponseEntity.ok(rolActualizado);
     }
 }
