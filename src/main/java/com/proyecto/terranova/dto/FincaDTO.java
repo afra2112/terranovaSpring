@@ -17,5 +17,5 @@ public class FincaDTO {
 
     private int numeroBanos;
 
-    private int idProducto;
+    private Long idProducto;
 }

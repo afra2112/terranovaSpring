@@ -1,5 +1,6 @@
 package com.proyecto.terranova.entity;
 
+import com.proyecto.terranova.config.enums.EstadoCitaEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,7 +21,7 @@ public class Cita {
     private LocalDate fechaCita;
 
     @Column(nullable = false, length = 30)
-    private String estadoCita;
+    private EstadoCitaEnum estadoCita;
 
     @Column(nullable = false)
     private LocalTime horaCita;

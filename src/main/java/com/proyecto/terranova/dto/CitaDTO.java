@@ -1,5 +1,6 @@
 package com.proyecto.terranova.dto;
 
+import com.proyecto.terranova.config.enums.EstadoCitaEnum;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,15 +13,15 @@ public class CitaDTO {
 
     private LocalDate fechaCita;
 
-    private String estadoCita;
+    private EstadoCitaEnum estadoCita;
 
     private LocalTime horaCita;
 
-    private int idProducto;
+    private Long idProducto;
 
     private String cedulaComprador;
 
     private String cedulaVendedor;
 
-    private int idUbicacion;
+    private Long idUbicacion;
 }

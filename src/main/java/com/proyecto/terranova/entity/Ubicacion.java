@@ -1,5 +1,7 @@
 package com.proyecto.terranova.entity;
 
+import com.proyecto.terranova.config.enums.CiudadesEnum;
+import com.proyecto.terranova.config.enums.DepartamentoEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,8 +15,11 @@ public class Ubicacion {
     private Long idUbicacion;
 
     @Column(length = 50, nullable = false)
-    private String departamento;
+    private DepartamentoEnum departamento;
 
     @Column(length = 50, nullable = false)
-    private String ciudad;
+    private CiudadesEnum ciudad;
+
+    @Column(length = 255, nullable = true)
+    private String detalles;
 }

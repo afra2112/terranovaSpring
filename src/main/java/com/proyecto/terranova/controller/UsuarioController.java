@@ -18,9 +18,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService serviceUsuario;
 
-    @Autowired
-    private UsuarioRepository repositoryUsuario;
-
     @GetMapping("/listarTodo")
     public ResponseEntity<List<UsuarioDTO>> obtenerTodosLosUsuarios(){
         List<UsuarioDTO> entidadesUsuario = serviceUsuario.findAll();
@@ -45,9 +42,9 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario eliminado");
     }
 
-    @GetMapping("/consultarRoles/{cedula}")
-    public ResponseEntity<List<String>> consultarRolesPorCedula(@PathVariable String cedula){
-        List<String> listaRoles = repositoryUsuario.findByRolesAndCedula(cedula);
-        return ResponseEntity.ok(listaRoles);
+    @PutMapping("/editarUsuario/{id}")
+    public  ResponseEntity<UsuarioDTO> editarUsuarioPorId(@PathVariable String id, @RequestBody UsuarioDTO usuarioDTO){
+        UsuarioDTO usuarioActualizado = serviceUsuario.update(id, usuarioDTO);
+        return ResponseEntity.ok(usuarioActualizado);
     }
 }

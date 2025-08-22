@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/Imagens")
+@RequestMapping("/api/Imagenes")
 public class ImagenController {
 
     @Autowired

@@ -23,5 +23,5 @@ public class ProductoDTO {
 
     private String cedulaVendedor;
 
-    private int idUbicacion;
+    private Long idUbicacion;
 }

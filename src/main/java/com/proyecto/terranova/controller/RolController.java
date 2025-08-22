@@ -2,6 +2,8 @@
 package com.proyecto.terranova.controller;
 
 import com.proyecto.terranova.dto.RolDTO;
+import com.proyecto.terranova.repository.RolRepository;
+import com.proyecto.terranova.repository.UsuarioRepository;
 import com.proyecto.terranova.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +13,14 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/Rols")
+@RequestMapping("/api/Roles")
 public class RolController {
 
     @Autowired
     private RolService serviceRol;
 
+    @Autowired
+    private RolRepository repositoryRol;
 
     @GetMapping("/listarTodo")
     public ResponseEntity<List<RolDTO>> obtenerTodosLosRols(){
@@ -40,5 +44,11 @@ public class RolController {
     public ResponseEntity<Long> eliminarRol(@PathVariable Long id){
         serviceRol.delete(id);
         return ResponseEntity.ok(id);
+    }
+
+    @GetMapping("/cedula/{cedula}")
+    public ResponseEntity<List<String>> consultarRolesPorCedula(@PathVariable String cedula){
+        List<String> listaRoles = repositoryRol.findByRolesAndCedula(cedula);
+        return ResponseEntity.ok(listaRoles);
     }
 }

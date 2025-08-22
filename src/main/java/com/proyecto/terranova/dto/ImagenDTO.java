@@ -9,5 +9,5 @@ public class ImagenDTO {
 
     private String nombreArchivo;
 
-    private int idProducto;
+    private Long idProducto;
 }

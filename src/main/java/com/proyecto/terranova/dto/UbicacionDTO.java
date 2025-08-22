@@ -1,5 +1,7 @@
 package com.proyecto.terranova.dto;
 
+import com.proyecto.terranova.config.enums.CiudadesEnum;
+import com.proyecto.terranova.config.enums.DepartamentoEnum;
 import lombok.Data;
 
 @Data
@@ -7,7 +9,9 @@ public class UbicacionDTO {
 
     private Long idUbicacion;
 
-    private String departamento;
+    private DepartamentoEnum departamento;
 
-    private String ciudad;
+    private CiudadesEnum ciudad;
+
+    private String detalles;
 }
