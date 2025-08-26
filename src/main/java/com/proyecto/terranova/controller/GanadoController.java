@@ -11,34 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/Ganados")
+@RequestMapping("/ganados")
 public class GanadoController {
 
-    @Autowired
-    private GanadoService serviceGanado;
-
-
-    @GetMapping("/listarTodo")
-    public ResponseEntity<List<GanadoDTO>> obtenerTodosLosGanados(){
-        List<GanadoDTO> entidadesGanado = serviceGanado.findAll();
-        return ResponseEntity.ok(entidadesGanado);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<GanadoDTO> obtenerGanadoPorId(@PathVariable Long id){
-        GanadoDTO dtoGanado = serviceGanado.findById(id);
-        return ResponseEntity.ok(dtoGanado);
-    }
-
-    @PostMapping("/crearGanado")
-    public ResponseEntity<GanadoDTO> crearGanado(@RequestBody GanadoDTO dtoGanado){
-        serviceGanado.save(dtoGanado);
-        return ResponseEntity.ok(dtoGanado);
-    }
-
-    @DeleteMapping("/eliminarGanado/{id}")
-    public ResponseEntity<Long> eliminarGanado(@PathVariable Long id){
-        serviceGanado.delete(id);
-        return ResponseEntity.ok(id);
-    }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Long> {
 
-
     @Query(value = "SELECT u.nombres, r.nombre_rol FROM usuarios u JOIN usuario_rol ur ON u.cedula = ur.cedula JOIN roles r ON ur.id_rol = r.id_rol WHERE u.cedula = :cedula", nativeQuery = true)
     List<String> findByRolesAndCedula(@Param("cedula") String cedula);
 

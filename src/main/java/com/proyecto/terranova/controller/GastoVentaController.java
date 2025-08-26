@@ -14,31 +14,4 @@ import java.util.List;
 @RequestMapping("/api/GastoVentas")
 public class GastoVentaController {
 
-    @Autowired
-    private GastoVentaService serviceGastoVenta;
-
-
-    @GetMapping("/listarTodo")
-    public ResponseEntity<List<GastoVentaDTO>> obtenerTodosLosGastoVentas(){
-        List<GastoVentaDTO> entidadesGastoVenta = serviceGastoVenta.findAll();
-        return ResponseEntity.ok(entidadesGastoVenta);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<GastoVentaDTO> obtenerGastoVentaPorId(@PathVariable Long id){
-        GastoVentaDTO dtoGastoVenta = serviceGastoVenta.findById(id);
-        return ResponseEntity.ok(dtoGastoVenta);
-    }
-
-    @PostMapping("/crearGastoVenta")
-    public ResponseEntity<GastoVentaDTO> crearGastoVenta(@RequestBody GastoVentaDTO dtoGastoVenta){
-        serviceGastoVenta.save(dtoGastoVenta);
-        return ResponseEntity.ok(dtoGastoVenta);
-    }
-
-    @DeleteMapping("/eliminarGastoVenta/{id}")
-    public ResponseEntity<Long> eliminarGastoVenta(@PathVariable Long id){
-        serviceGastoVenta.delete(id);
-        return ResponseEntity.ok(id);
-    }
 }
