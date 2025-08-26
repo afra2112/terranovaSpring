@@ -2,8 +2,6 @@ package com.proyecto.terranova.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,5 +19,5 @@ public class Rol {
     private String nombreRol;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Usuario> usuarioSet;
+    private List<Usuario> usuarios;
 }

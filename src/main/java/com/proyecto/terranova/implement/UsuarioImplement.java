@@ -5,7 +5,9 @@ import com.proyecto.terranova.repository.RolRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.proyecto.terranova.service.UsuarioService;
@@ -27,12 +29,11 @@ public class UsuarioImplement implements UsuarioService {
 
     @Override
     public UsuarioDTO save(UsuarioDTO dto) {
+
         Usuario entidadUsuario = modelMapper.map(dto, Usuario.class);
 
-        if (dto.getIdRoles() != null && !dto.getIdRoles().isEmpty()) {
-            List<Rol> roles = rolRepository.findAllById(dto.getIdRoles());
-            entidadUsuario.setRoles(roles);
-        }
+        List<Rol> roles = rolRepository.findAllById(dto.getIdRoles());
+        entidadUsuario.setRoles(roles);
 
         Usuario entidadGuardada = repository.save(entidadUsuario);
         return modelMapper.map(entidadGuardada, UsuarioDTO.class);
@@ -56,7 +57,14 @@ public class UsuarioImplement implements UsuarioService {
     }
 
     @Override
+    public UsuarioDTO findByEmail(String email) {
+        Usuario entidadUsuario = repository.findById(email).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return modelMapper.map(entidadUsuario, UsuarioDTO.class);
+    }
+
+    @Override
     public List<UsuarioDTO> findAll() {
+
         return repository.findAll().stream()
             .map(entity -> modelMapper.map(entity, UsuarioDTO.class))
             .collect(Collectors.toList());
@@ -80,4 +88,17 @@ public class UsuarioImplement implements UsuarioService {
     public long count() {
         return repository.count();
     }
+
+    @Override
+    public boolean validarLogin(String email, String contrasena) {
+        Optional<Usuario> usuario = repository.findByEmail(email);
+        if(usuario.isPresent()){
+            if(usuario.get().getContrasena().equals(contrasena)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

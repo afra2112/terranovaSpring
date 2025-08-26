@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.proyecto.terranova.entity.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+    Optional<Usuario> findByEmail(String email);
 }

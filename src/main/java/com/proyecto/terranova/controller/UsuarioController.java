@@ -2,7 +2,6 @@
 package com.proyecto.terranova.controller;
 
 import com.proyecto.terranova.dto.UsuarioDTO;
-import com.proyecto.terranova.repository.UsuarioRepository;
 import com.proyecto.terranova.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
