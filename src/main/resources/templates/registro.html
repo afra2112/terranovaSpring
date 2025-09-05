@@ -53,6 +53,8 @@
       <label for="terms" class="text-sm">Acepto los términos y condiciones</label>
     </div>
 
+    <p th:if="${param.yaExiste}" class="text-red-500 text-sm mb-4">Ya existe un usuario registrado con ese correo o cedula</p>
+
     <div id="error" class="text-red-600 text-sm whitespace-pre-line"></div>
 
     <button type="submit" class="w-full bg-green-700 text-white py-2 rounded-full font-semibold">Regístrate ahora</button>

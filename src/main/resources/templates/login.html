@@ -275,10 +275,10 @@
 
 <div id="successModal"
      th:class="'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 '
-               + (${param.error} or ${param.logout} ? '' : 'hidden')">
+               + (${param.error} or ${param.logout} or ${param.creado} ? '' : 'hidden')">
     <div id="modalContent"
          th:class="'bg-white rounded-2xl shadow-xl p-10 text-center transform transition duration-300 ease-out '
-                   + (${param.error} or ${param.logout} ? 'scale-100 opacity-100' : 'scale-75 opacity-0')">
+                   + (${param.error} or ${param.logout} or ${param.creado} ? 'scale-100 opacity-100' : 'scale-75 opacity-0')">
 
         <h1 class="text-2xl font-bold text-green-700 mb-8">Terranova</h1>
 
@@ -297,9 +297,9 @@
             </button>
         </form>
 
-        <!-- MENSAJES -->
         <p th:if="${param.error}" class="text-red-500 text-sm mb-4">Correo o Contraseña Incorrecta</p>
         <p th:if="${param.logout}" class="text-green-500 text-sm mb-4">Saliste de tu sesión correctamente</p>
+        <p th:if="${param.creado}" class="text-green-500 text-sm mb-4">Se creo el usuario correctamente</p>
 
         <div class="flex flex-col items-center gap-2 mt-4">
             <a th:href="@{/usuarios/registro}"
@@ -532,7 +532,7 @@
 
     window.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
-        if (params.get("error") === "true" || params.get("logout") === "true") {
+        if (params.get("error") === "true" || params.get("logout") === "true" || params.get("creado") === true) {
             abrirModalInicio();
         }
     });

@@ -34,7 +34,11 @@ public class UsuarioImplement implements UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void save(UsuarioDTO dto) {
+    public boolean save(UsuarioDTO dto) {
+        if(repository.existsByemail(dto.getEmail()) || repository.existsBycedula(dto.getCedula())){
+            return false;
+        }
+
         List<Rol> roles = new ArrayList<Rol>();
         for (RolEnum rol : dto.getRoles()){
             roles.add(rolRepository.findBynombreRol(rol));
@@ -45,6 +49,7 @@ public class UsuarioImplement implements UsuarioService {
         entidadUsuario.setContrasena(passwordEncoder.encode(dto.getContrasena()));
         entidadUsuario.setRoles(roles);
         repository.save(entidadUsuario);
+        return true;
     }
 
     @Override

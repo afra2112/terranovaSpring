@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -49,11 +50,16 @@ public class UsuarioController {
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@Valid @ModelAttribute UsuarioDTO usuarioDTO, Model model, BindingResult bindingResult){
+    public String registrarUsuario(@Valid @ModelAttribute UsuarioDTO usuarioDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             return "redirect:/usuarios/registro";
         }
-        serviceUsuario.save(usuarioDTO);
+        if(!serviceUsuario.save(usuarioDTO)){
+            System.out.println("YAEXISTE");
+            redirectAttributes.addAttribute("yaExiste", true);
+            return "redirect:/usuarios/registro";
+        }
+        redirectAttributes.addAttribute("creado", true);
         return "redirect:/usuarios/login";
     }
 

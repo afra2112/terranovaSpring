@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div th:fragment="sideBarComprador">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <header class="bg-white shadow-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-10">
+
+      <h1 class="text-3xl font-bold text-green-600 tracking-wide">Terranova</h1>
+
+      <input
+              type="text"
+              placeholder="Buscar fincas, terrenos, ganado..."
+              class="w-3/5 px-5 py-2 rounded-full shadow-inner border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+      />
+
+      <div class="flex items-center gap-6 text-green-600 font-medium">
+
+        <a href="${pageContext.request.contextPath}/InicioCompradorController" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out"><button class="hover:text-green-600 transition">🔎 Productos</button></a>
+        <a href="${pageContext.request.contextPath}/NotificacionController?accion=listarNotificaciones" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out"><button class="hover:text-green-600 transition">🔔 Notificaciones</button></a>
+
+        <div class="relative">
+
+          <button
+                  class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-lg font-semibold hover:bg-green-600 transition"
+                  id="perfilBtn"
+                  onclick="toggleMenu()"
+          >
+            A
+          </button>
+
+          <div
+                  id="perfilMenu"
+                  class="absolute right-0 mt-2 w-44 bg-white border border-green-600 rounded-xl shadow-md hidden z-50"
+          >
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out">👤 Mi perfil</a>
+            <a href="${pageContext.request.contextPath}/CitaController?accion=listar" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out">🗓️ Mis citas</a>
+            <a href="${pageContext.request.contextPath}/VentaController?accion=listarVentas" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out">🛒 Mis Compras</a>
+            <a href="${pageContext.request.contextPath}/ValidarUsuario?accion=logout" class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200 ease-in-out">🔓 Cerrar sesión</a>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <script>
+      function toggleMenu() {
+          const menu = document.getElementById('perfilMenu');
+          menu.classList.toggle('hidden');
+
+          // Cierra el menú si haces clic fuera
+          document.addEventListener('click', function closeMenu(e) {
+              if (!menu.contains(e.target) && !document.getElementById('perfilBtn').contains(e.target)) {
+                  menu.classList.add('hidden');
+                  document.removeEventListener('click', closeMenu);
+              }
+          });
+      }
+    </script>
+  </div>
+</body>
+</html>
