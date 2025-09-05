@@ -1,11 +1,14 @@
 package com.proyecto.terranova.implement;
 
+import com.proyecto.terranova.config.enums.RolEnum;
 import com.proyecto.terranova.entity.Rol;
 import com.proyecto.terranova.repository.RolRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,16 +30,21 @@ public class UsuarioImplement implements UsuarioService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public UsuarioDTO save(UsuarioDTO dto) {
+    public void save(UsuarioDTO dto) {
+        List<Rol> roles = new ArrayList<Rol>();
+        for (RolEnum rol : dto.getRoles()){
+            roles.add(rolRepository.findBynombreRol(rol));
+        }
 
         Usuario entidadUsuario = modelMapper.map(dto, Usuario.class);
 
-        List<Rol> roles = rolRepository.findAllById(dto.getIdRoles());
+        entidadUsuario.setContrasena(passwordEncoder.encode(dto.getContrasena()));
         entidadUsuario.setRoles(roles);
-
-        Usuario entidadGuardada = repository.save(entidadUsuario);
-        return modelMapper.map(entidadGuardada, UsuarioDTO.class);
+        repository.save(entidadUsuario);
     }
 
     @Override
@@ -88,17 +96,5 @@ public class UsuarioImplement implements UsuarioService {
     public long count() {
         return repository.count();
     }
-
-    @Override
-    public boolean validarLogin(String email, String contrasena) {
-        Optional<Usuario> usuario = repository.findByEmail(email);
-        if(usuario.isPresent()){
-            if(usuario.get().getContrasena().equals(contrasena)){
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 }

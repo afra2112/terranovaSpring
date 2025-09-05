@@ -4,7 +4,7 @@ import java.util.List;
 import com.proyecto.terranova.dto.UsuarioDTO;
 
 public interface UsuarioService {
-    UsuarioDTO save(UsuarioDTO dto);
+    void save(UsuarioDTO dto);
     UsuarioDTO update(String id, UsuarioDTO dto);
     UsuarioDTO findById(String id);
     UsuarioDTO findByEmail(String email);
@@ -12,5 +12,4 @@ public interface UsuarioService {
     boolean delete(String id);
     boolean existsById(String id);
     long count();
-    boolean validarLogin(String email, String contrasena);
 }

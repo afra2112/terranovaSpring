@@ -1,6 +1,8 @@
 package com.proyecto.terranova.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -23,10 +25,11 @@ public class Usuario {
     @Column(length = 45, nullable = false)
     private String apellidos;
 
-    @Column(length = 45, nullable = false)
+    @Email
+    @NotBlank
     private String email;
 
-    @Column(length = 100, nullable = false)
+    @NotBlank
     private String contrasena;
 
     @Column(length = 10, nullable = false)
@@ -35,7 +38,7 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDate nacimiento;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_rol",
             joinColumns = @JoinColumn(name = "cedula"),

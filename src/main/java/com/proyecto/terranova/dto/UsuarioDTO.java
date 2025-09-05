@@ -1,5 +1,6 @@
 package com.proyecto.terranova.dto;
 
+import com.proyecto.terranova.config.enums.RolEnum;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -22,5 +23,5 @@ public class UsuarioDTO {
 
     private LocalDate nacimiento;
 
-    private List<Long> idRoles;
+    private List<RolEnum> roles;
 }

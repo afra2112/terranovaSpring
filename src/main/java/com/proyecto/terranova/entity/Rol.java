@@ -1,10 +1,9 @@
 package com.proyecto.terranova.entity;
 
+import com.proyecto.terranova.config.enums.RolEnum;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -15,8 +14,8 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRol;
 
-    @Column(length = 10, nullable = false)
-    private String nombreRol;
+    @Enumerated(EnumType.STRING)
+    private RolEnum nombreRol;
 
     @ManyToMany(mappedBy = "roles")
     private List<Usuario> usuarios;
